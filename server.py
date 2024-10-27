@@ -138,12 +138,13 @@ def predict():
     boxes_xyxy[:, 2] = boxes[:, 0] + boxes[:, 2] / 2.
     boxes_xyxy[:, 3] = boxes[:, 1] + boxes[:, 3] / 2.
     boxes_xyxy /= ratio
-    dets = multiclass_nms(boxes_xyxy, scores, nms_thr=0.45, score_thr=0.1)
+    dets = multiclass_nms(boxes_xyxy, scores, nms_thr=0.45, score_thr=args.score_thr)
 
     # 判断是否需要可视化
     query_vis = request.args.get('vis', '0') == '1'
     save_vis = True if args.output_dir else Flask
     need_vis = query_vis or save_vis
+    vis_base64 = None
 
     result = []
     if dets is not None:
@@ -173,8 +174,6 @@ def predict():
         if query_vis:
             _, buffer = cv2.imencode('.jpg', origin_img)
             vis_base64 = base64.b64encode(buffer).decode('utf-8')
-        else:
-            vis_base64 = None
 
     inference_time = time.time() - start_inference_time  # 结束推理计时
 
