@@ -2,6 +2,20 @@
 
 为 yolox 的 onnx 模型提供 API 服务。
 
+## 依赖
+
+```
+pip install -r requirements.txt
+```
+
+已验证的版本
+```
+Flask 3.0.3
+numpy 1.26.3
+onnxruntime 1.19.2
+opencv-python 4.9.0.80
+```
+
 ## 用法
 
 ### 最简用法
