@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
-import time
-import random
 import base64
+import os
+import random
+import time
+
+from collections import deque
 
 # 开始计时
 start_time = time.time()
@@ -84,24 +86,28 @@ def make_parser():
         help="全局置信度阈值。",
     )
     parser.add_argument(
+        "-i",
         "--input_shape",
         type=str,
         default="640,640",
         help="指定推理的输入形状。",
     )
     parser.add_argument(
+        "-p",
         "--port",
         type=int,
         default=9656,
         help="HTTP服务器监听端口。",
     )
     parser.add_argument(
+        "-k",
         "--key",
         type=str,
         default=None,
         help="API密钥。",
     )
     parser.add_argument(
+        "-r",
         "--rate_limit",
         type=int,
         default=None,

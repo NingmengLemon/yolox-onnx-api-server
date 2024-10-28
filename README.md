@@ -29,8 +29,8 @@ python server.py -m yolox.onnx -l labels.txt
 ### 参数解释
 
 ```
-usage: yolox-onnx-api-server [-h] -m MODEL -l LABELS [-o OUTPUT_DIR] [-s SCORE_THR] [--input_shape INPUT_SHAPE]
-                             [--port PORT]
+usage: yolox-onnx-api-server [-h] -m MODEL -l LABELS [-o OUTPUT_DIR] [-s SCORE_THR] [-i INPUT_SHAPE] [-p PORT]
+                             [-k KEY] [-r RATE_LIMIT]
 
 options:
   -h, --help            show this help message and exit
@@ -42,10 +42,12 @@ options:
                         可视化图片输出目录。
   -s SCORE_THR, --score_thr SCORE_THR
                         全局置信度阈值。
-  --input_shape INPUT_SHAPE
+  -i INPUT_SHAPE, --input_shape INPUT_SHAPE
                         指定推理的输入形状。
-  --port PORT           HTTP服务器监听端口。
-  --key KEY             API密钥。
+  -p PORT, --port PORT  HTTP服务器监听端口。
+  -k KEY, --key KEY     API密钥。
+  -r RATE_LIMIT, --rate_limit RATE_LIMIT
+                        每秒允许的最大请求数
 ```
 
 ## 调用
