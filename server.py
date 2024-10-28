@@ -90,6 +90,12 @@ def make_parser():
         default=9656,
         help="HTTP服务器监听端口。",
     )
+    parser.add_argument(
+        "--key",
+        type=str,
+        default=None,
+        help="API密钥。",
+    )
     return parser
 
 
@@ -101,6 +107,12 @@ def load_classes(labels_path):
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    # 检查 API KEY
+    # 从查询字符串中获取 API 密钥
+    api_key = request.args.get('key')
+    if args.key is None or api_key != args.key:
+        return jsonify({'error': 'Unauthorized'}), 401
+
     # 直接从请求内容中读取图像数据
     if request.content_type.startswith('image'):
         img_bytes = request.data
