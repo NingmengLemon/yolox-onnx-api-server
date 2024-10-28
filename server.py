@@ -79,8 +79,8 @@ def make_parser():
         "-o",
         "--output_dir",
         type=str,
-        default='output',
-        help="可视化图片输出目录。",
+        default=None,
+        help="可视化图片输出目录。为空则不保存可视化结果",
     )
     parser.add_argument(
         "-s",
