@@ -45,27 +45,33 @@ options:
   --input_shape INPUT_SHAPE
                         指定推理的输入形状。
   --port PORT           HTTP服务器监听端口。
+  --key KEY             API密钥。
 ```
 
 ## 调用
 
 API 路径: `/predict`
 
-设置 query 参数 `vis=1` 将会返回可视化结果。
+### 查询参数
+
+ - `vis`: 是否返回 base64 编码的可视化结果 (`0` 或 `1`)
+ - `key`: API 密钥
+
+### 图片传入
 
 支持以下方法传入图片。
 
-### 直接POST
+#### 直接POST
 
 设置 `Content-Type` 为 `image` 开头，图片内容直接作为 POST 内容提交。
 
-### 文件上传
+#### 文件上传
 
 设置表单中名为 `image` 的文件为要上传的图片。
 
 `Content-Type` 通常是 `multipart/form-data`。
 
-### JSON中的BASE64
+#### JSON中的BASE64
 
 设置 `Content-Type` 为 `application/json`
 
