@@ -22,6 +22,10 @@ from utils import mkdir, multiclass_nms, demo_postprocess , vis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
+# 全局请求记录队列，用于保存请求时间戳
+request_times = deque()
+rate_limit = None  # 每秒允许的最大请求数
+
 
 def console_log(text):
     print('[' + time.strftime("%H:%M:%S", time.localtime()) + '] ' + text)
@@ -96,7 +100,28 @@ def make_parser():
         default=None,
         help="API密钥。",
     )
+    parser.add_argument(
+        "--rate_limit",
+        type=int,
+        default=None,
+        help="每秒允许的最大请求数",
+    )
     return parser
+
+
+# 检查速率限制
+def check_rate_limit():
+    current_time = time.time()
+    # 从队列中清理1秒以前的请求记录
+    while request_times and current_time - request_times[0] > 1:
+        request_times.popleft()
+
+    # 如果记录的请求数超过限制，拒绝请求
+    if len(request_times) >= rate_limit:
+        return False
+    # 记录当前请求时间
+    request_times.append(current_time)
+    return True
 
 
 def load_classes(labels_path):
@@ -112,6 +137,10 @@ def predict():
     api_key = request.args.get('key')
     if args.key is None or api_key != args.key:
         return jsonify({'error': 'Unauthorized'}), 401
+
+    # 检查速率限制
+    if rate_limit and not check_rate_limit():
+        return jsonify({'error': 'Rate limit exceeded. Please try again later.'}), 429
 
     # 直接从请求内容中读取图像数据
     if request.content_type.startswith('image'):
@@ -197,11 +226,14 @@ def predict():
 
 
 if __name__ == '__main__':
+    # 参数解析
     args = make_parser().parse_args()
-    input_shape = tuple(map(int, args.input_shape.split(',')))
+    rate_limit = args.rate_limit
     mkdir(args.output_dir)
 
+    # 加载模型和分类
     console_log('Loading model...')
+    input_shape = tuple(map(int, args.input_shape.split(',')))
     session = onnxruntime.InferenceSession(args.model)
     COCO_CLASSES = load_classes(args.labels)
 
