@@ -2,3 +2,4 @@ flask
 numpy
 onnxruntime
 opencv-python
+waitress
