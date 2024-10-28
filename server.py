@@ -245,7 +245,10 @@ if __name__ == '__main__':
     # 加载模型和分类
     console_log('Loading model...')
     input_shape = tuple(map(int, args.input_shape.split(',')))
-    session = onnxruntime.InferenceSession(args.model)
+    session = onnxruntime.InferenceSession(
+        args.model,
+        providers=['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+    )
     COCO_CLASSES = load_classes(args.labels)
 
     # 停止计时
