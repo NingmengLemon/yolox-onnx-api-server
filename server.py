@@ -8,6 +8,7 @@ import base64
 
 # 开始计时
 start_time = time.time()
+print('https://github.com/nkxingxh/yolox-onnx-api-server')
 print('Loading libraries, please wait...')
 
 import cv2
