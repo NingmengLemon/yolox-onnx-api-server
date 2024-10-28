@@ -146,7 +146,7 @@ def predict():
     # 检查 API KEY
     # 从查询字符串中获取 API 密钥
     api_key = request.args.get('key')
-    if args.key is None or api_key != args.key:
+    if (args.key is not None) and api_key != args.key:
         return jsonify({'error': 'Unauthorized'}), 401
 
     # 检查速率限制
