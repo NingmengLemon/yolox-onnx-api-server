@@ -96,3 +96,7 @@ API 路径: `/predict`
 > 方便、快速、高效地使用 PHP 编写你自己的 Bot。
 
 [群图片过滤插件](https://github.com/nkxingxh/miraiez-plugins/blob/main/top.nkxingxh.miraiez.yolox.ImageFilter.php)
+
+## 许可
+
+yolox-onnx-api-server 根据 AGPL-3.0 许可证进行许可，有关详细信息，请参阅 [LICENSE](./LICENSE) 文件。
