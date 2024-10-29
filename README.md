@@ -86,4 +86,13 @@ API 路径: `/predict`
 
 ## 用例
 
+### API 调用
+
 参考 [example.php](./example.php) 文件。
+
+### MiraiEz 图片过滤
+
+> 支持 mirai-api-http 的 PHP 机器人框架。
+> 方便、快速、高效地使用 PHP 编写你自己的 Bot。
+
+[群图片过滤插件](https://github.com/nkxingxh/miraiez-plugins/blob/main/top.nkxingxh.miraiez.yolox.ImageFilter.php)
