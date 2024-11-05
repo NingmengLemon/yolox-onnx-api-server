@@ -240,7 +240,8 @@ if __name__ == '__main__':
     # 参数解析
     args = make_parser().parse_args()
     rate_limit = args.rate_limit
-    mkdir(args.output_dir)
+    if args.output_dir:
+        mkdir(args.output_dir)
 
     # 加载模型和分类
     console_log('Loading model...')
