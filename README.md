@@ -30,7 +30,7 @@ python server.py -m yolox.onnx -l labels.txt
 
 ```
 usage: yolox-onnx-api-server [-h] -m MODEL -l LABELS [-o OUTPUT_DIR] [-s SCORE_THR] [-i INPUT_SHAPE] [-p PORT]
-                             [-k KEY] [-r RATE_LIMIT]
+                             [-k KEY] [-r RATE_LIMIT] [--tensorrt] [--cuda]
 
 options:
   -h, --help            show this help message and exit
@@ -39,7 +39,7 @@ options:
   -l LABELS, --labels LABELS
                         分类标签文件。
   -o OUTPUT_DIR, --output_dir OUTPUT_DIR
-                        可视化图片输出目录。
+                        可视化图片输出目录。为空则不保存可视化结果
   -s SCORE_THR, --score_thr SCORE_THR
                         全局置信度阈值。
   -i INPUT_SHAPE, --input_shape INPUT_SHAPE
@@ -48,6 +48,29 @@ options:
   -k KEY, --key KEY     API密钥。
   -r RATE_LIMIT, --rate_limit RATE_LIMIT
                         每秒允许的最大请求数
+  --tensorrt            启用TensorRT支持 (优先于CUDA)
+  --cuda                启用CUDA支持
+```
+
+### 使用GPU
+
+安装了 CUDA 与 cuDNN 后, 可以安装 onnxruntime-gpu 来使用 GPU 进行推理。
+
+启动时使用 `--cuda` 参数即可。
+
+如果启用 cuda 选项后, 启动时提示找不到
+
+```
+Failed to create CUDAExecutionProvider. Require cuDNN 9.* and CUDA 12.*, and the latest MSVC runtime. Please install all dependencies as mentioned in the GPU requirements page
+```
+
+你可以尝试安装 PyTorch, 并取消第 20 行的注释
+
+```
+20 | import torch
+21 | import cv2
+22 | import numpy as np
+23 | import onnxruntime
 ```
 
 ## 调用

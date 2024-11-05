@@ -17,6 +17,7 @@ start_time = time.time()
 print('https://github.com/nkxingxh/yolox-onnx-api-server')
 print('Loading libraries, please wait...')
 
+# import torch
 import cv2
 import numpy as np
 import onnxruntime
@@ -116,6 +117,16 @@ def make_parser():
         type=int,
         default=None,
         help="每秒允许的最大请求数",
+    )
+    parser.add_argument(
+        "--tensorrt",
+        action='store_true',
+        help="启用TensorRT支持 (优先于CUDA)",
+    )
+    parser.add_argument(
+        "--cuda",
+        action='store_true',
+        help="启用CUDA支持",
     )
     return parser
 
@@ -243,12 +254,20 @@ if __name__ == '__main__':
     if args.output_dir:
         mkdir(args.output_dir)
 
+    # providers
+    exec_providers = []
+    if args.tensorrt:
+        exec_providers.append('TensorrtExecutionProvider')
+    if args.cuda:
+        exec_providers.append('CUDAExecutionProvider')
+    exec_providers.append('CPUExecutionProvider')
+
     # 加载模型和分类
     console_log('Loading model...')
     input_shape = tuple(map(int, args.input_shape.split(',')))
     session = onnxruntime.InferenceSession(
         args.model,
-        providers=['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+        providers=exec_providers
     )
     COCO_CLASSES = load_classes(args.labels)
 
