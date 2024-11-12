@@ -205,7 +205,7 @@ def predict():
 
     # 判断是否需要可视化
     query_vis = request.args.get('vis', '0') == '1'
-    save_vis = True if args.output_dir else Flask
+    save_vis = True if args.output_dir else False
     need_vis = query_vis or save_vis
     vis_base64 = None
 
