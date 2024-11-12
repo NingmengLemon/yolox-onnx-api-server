@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # Copyright (c) Megvii Inc. All rights reserved.
 
+# yolox-onnx-api-server
+# License: AGPL-3.0
+# Github: https://github.com/nkxingxh/yolox-onnx-api-server
+
 import os
 import random
 
