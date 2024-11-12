@@ -5,10 +5,8 @@ import random
 import time
 
 print('Loading libraries, please wait...')
-import torch
 import cv2
 import numpy as np
-import onnxruntime
 from utils import mkdir, multiclass_nms, demo_postprocess, vis
 
 
@@ -94,7 +92,9 @@ if __name__ == '__main__':
         exec_providers.append('TensorrtExecutionProvider')
     if args.cuda:
         exec_providers.append('CUDAExecutionProvider')
+        import torch
     exec_providers.append('CPUExecutionProvider')
+    import onnxruntime
 
     print('Loading model...')
     session = onnxruntime.InferenceSession(args.model, providers=exec_providers)
