@@ -1,0 +1,15 @@
+[project]
+name = "yolox-onnx-api-server"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "nkxingxh", email = "nkxingxh@example.com" }]
+dependencies = ["flask", "numpy", "onnxruntime", "opencv-python", "waitress"]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = { text = "AGPL-3.0" }
+
+[tool.pdm.scripts]
+serv = { cmd = ["pdm", "run", "./server.py"] }
+
+[tool.pdm]
+distribution = false
